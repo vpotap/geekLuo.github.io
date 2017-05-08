@@ -1,65 +1,91 @@
-<!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
-<head>
-{% include head.html %}
-</head>
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include head.html %}
+    </head>
 
-<body id="post" {% if page.image.feature %}class="feature"{% endif %}>
+    <body>
+        {% include svg.html %}
+        <header class="head">
+            {% include header.html %}
+            {% include nav.html %}
+        </header>
+        {% include search.html %}
+        <section class="margin">
+            <div class="content">
+                <div class="content_container">
+                    <article>
+                        {% if page.type == "vimeo" %}
+                            {% if page.vimeo-embed %}
+                                <div class="video_container">
+                                    {{ page.vimeo-embed }}
+                                </div>
+                            {% endif %}
+                        {% elsif page.type == "youtube" %}
+                            {% if page.yt-video-id %}
+                                <div class="video_container">
+                                    <iframe src="https://www.youtube.com/embed/{{page.yt-video-id}}?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                            {% endif %}
+                        {% elsif page.type == "image" or page.type == "gallery" %}
+                            {% if page.featimg %}
+                                <img class="featimg" src="{{ site.media_folder | prepend: site.baseurl | replace: '//', '/'}}/{{ page.featimg }}" alt="{{ page.featimg }}">
+                            {% endif %}
+                        {% elsif page.type == "audio" %}
+                            {% if page.audio-embed %}
+                                {{ page.audio-embed }}
+                            {% endif %}
+                        {% endif %}
 
-{% include browser-upgrade.html %}
-{% include navigation.html %}
-
-{% if page.image.feature %}
-<div class="entry-header">
-  {% if page.image.credit %}<div class="image-credit">Image source: {% if page.image.creditlink %}<a href="{{ page.image.creditlink }}">{% endif %}{{ page.image.credit }}{% if page.image.creditlink %}</a>{% endif %}</div><!-- /.image-credit -->{% endif %}
-  <div class="entry-image">
-    <img src="{{ site.url }}/images/{{ page.image.feature }}" alt="{{ page.title }}">
-  </div><!-- /.entry-image -->
-</div><!-- /.entry-header -->
-{% endif %}
-
-<div id="main" role="main">
-  <article class="hentry">
-    <header class="header-title">
-      <div class="header-title-wrap">
-        {% if page.link %}
-          <h1 class="entry-title"><i class="fa fa-bookmark permalink"></i> <a href="{{ page.link }}">{{ page.title }}</a></h1>
-        {% else %}
-          <h1 class="entry-title"><a href="{{ site.url }}{{ page.url }}" rel="bookmark" title="{{ page.title }}">{{ page.title }}</a></h1>
-        {% endif %}
-        <h2><span class="entry-date date published"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time></span></h2>
-        {% if site.reading_time %}
-        <p class="entry-reading-time">
-          <i class="fa fa-clock-o"></i>
-          {% include read-time.html %}
-        </p><!-- /.entry-reading-time -->
-        {% endif %}
-      </div><!-- /.header-title-wrap -->
-    </header>
-    <div class="entry-content">
-      {{ content }}
-      <footer class="entry-meta">
-        <span class="entry-tags">{% for tag in page.tags %}<a href="{{ site.url }}/tags/#{{ tag }}" title="Pages tagged {{ tag }}" class="tag"><span class="term">{{ tag }}</span></a>{% unless forloop.last %}{% endunless %}{% endfor %}</span>
-        {% if page.modified %}<span>Updated on <span class="entry-date date updated"><time datetime="{{ page.modified }}">{{ page.modified | date: "%B %d, %Y" }}</time></span></span>
-        <span class="author vcard"><span class="fn">{{ site.owner.name }}</span></span>{% endif %}
-        {% if page.share != false %}{% include social-share.html %}{% endif %}
-      </footer>
-    </div><!-- /.entry-content -->
-    {% if page.comments != false and site.disqus_shortname %}<section id="disqus_thread"></section><!-- /#disqus_thread -->{% endif %}
-    {% if site.related_posts.size > 0 %}{% include read-more.html %}{% endif %}
-  </article>
-</div><!-- /#main -->
-
-<div class="footer-wrapper">
-  <footer role="contentinfo">
-    {% include footer.html %}
-  </footer>
-</div><!-- /.footer-wrapper -->
-
-{% include scripts.html %}	        
-
-</body>
+                        <h1 class="post_title">
+                            {{ page.title }}
+                        </h1>
+                        <div class="meta">
+                            {% include author.html%} &bull;
+                            <span class="date">
+                                Published on {{ page.date | date: '%B %d, %Y' }}
+                            </span>
+                        </div>
+                        {% if page.type == "standard" %}
+                            {% if page.featimg %}
+                                <img class="featimg" src="{{ site.media_folder | prepend: site.baseurl | replace: '//', '/'}}/{{ page.featimg }}" alt="{{ page.featimg }}">
+                            {% endif %}
+                        {% endif %}
+                        <div class="post_content">
+                            {{ content }}
+                        </div>
+                        {% if page.category || page.tags %}
+                        <div class="catsandtags">
+                            {% if page.category %}
+                            <p class="category">
+                                <span class="name">Categories:</span>
+                                {{ page.categories | category_links }}
+                            </p>
+                            {% endif %}
+                            {% if page.tags %}
+                            <p class="tags">
+                                <span class="name">Tags:</span>
+                                {% for tag in page.tags %}
+                                    <a href="{{ site.tag_dir | prepend: site.baseurl | replace: '//', '/' }}/{{ tag }}">{{ tag }}</a>
+                                {% endfor %}
+                            </p>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </article>
+                    <div class="post_nav">
+                        {% if page.previous.url %}
+                        <a class="prev" href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}"><i class="fa fa-angle-left"></i><span class="short"> prev</span><span class="long">ious post</span></a>
+                        {% endif %}
+                        {% if page.next.url %}
+                        <a class="next" href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}"><span class="short">next </span><span class="long">post </span><i class="fa fa-angle-right"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% include sidebar.html %}
+            </div>
+        </section>
+        {% include footer.html %}
+        <script src="{{ site.baseurl | replace: '//', '/' }}/js/build/global.min.js"></script>
+    </body>
 </html>
