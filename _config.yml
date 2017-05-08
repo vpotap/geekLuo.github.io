@@ -1,121 +1,99 @@
-name: Twister
-description: a powerful jekyll theme
-url: #place url
-gems: [jekyll-paginate]
-baseurl: #place folder name if site is served in subfolder
-permalink: /:title/
-paginate: 8
-paginate_path: /page/:num/
-tag_dir: /tag
-category_dir: /category
-author_dir: /author
-author_title_prefix: 'Posted by '
-media_folder: /img
-author_default_avatar: /profile-pic.jpg
-tumblr: "#"
-pinterest: "#"
-instagram: "#"
-twitter: "#"
-facebook: "#"
-youtube: "#"
-vimeo: "#"
-soundcloud: "#"
+# ---------------- #
+#   Main Configs   #
+# ---------------- #
+baseurl:
+url: http://mazhuang.org
+date_format: "ordinal"
+title: 码志
+subtitle: "打码改变人生"
+description: "马壮的个人博客"
+keywords: 码志, Zhuang Ma, mzlogin, mazhuang
+favicon: /favicon.ico
+timezone: Asia/Shanghai
+encoding: "utf-8"
+side_bar_repo_limit: 5
 
-encoding: utf-8
-defaults:
+# ---------------- #
+#      Author      #
+# ---------------- #
+author: Zhuang Ma
+organization: zkh360.com
+organization_url: http://www.zkh360.com
+github_username: mzlogin
+location: Wuhan, China
+email: chumpma@gmail.com
+
+# ---------------- #
+#    Navigation    #
+# ---------------- #
+navs:
   -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-      type: "standard"
-      homedisplay: "featimg"
+    href: /
+    label: 首页
+
+  -
+    href: /categories/
+    label: 分类
+
+  -
+    href: /wiki/
+    label: 维基
+
+  -
+    href: /links/
+    label: 链接
+
+  -
+    href: /about/
+    label: 关于
+
+# ---------------- #
+#       RSS        #
+# ---------------- #
+subscribe_rss: /feed.xml
+
+# ---------------- #
+#      Jekyll      #
+# ---------------- #
 markdown: kramdown
 kramdown:
-  input: GFM
-  syntax_highlighter: rouge
-relative_permalinks: false
-exclude: [.git, .gitignore, sass, .sass-cache, package.json, gruntfile.js, node_modules, README.md]
+    input: GFM
+highlighter: rouge
+paginate: 8
+lsi: false
+quiet: false
+excerpt_separator: "\n\n"
+permalink: /:year/:month/:day/:title/
+gems:
+    - jekyll-github-metadata
+    - rouge
+#     - jekyll-html-pipeline
+    - jekyll-paginate
+    - jekyll-sitemap
+    - jekyll-feed
+    - jemoji
+#     - jekyll-mentions
+collections:
+    wiki:
+        output: true
+        permalink: /wiki/:path/
 
-# prose.io configurations
-prose:
-  media: "img"
-  metadata:
-    _posts:
-      - name: "title"
-        field:
-          element: "text"
-          label: "title"
-      - name: "layout"
-        field:
-          element: "select"
-          label: "Layout"
-          help: "display post at full width or with sidebar"
-          options:
-            - name: "with sidebar"
-              value: "post"
-            - name: "full width"
-              value: "post_full"
-      - name: "author"
-        field:
-          element: "text"
-          label: "Author"
-          help: "author id as defined within _data/authors.yml"
-          type: "text"
-      - name: "featimg"
-        field:
-          element: "text"
-          label: "Featured Image"
-          help: "featured image within the img-folder"
-          type: "text"
-      - name: "type"
-        field:
-          element: "select"
-          label: "Post Type"
-          help: "each type has some special feature"
-          options:
-            - name: "Standard"
-              value: "standard"
-            - name: "Image"
-              value: "image"
-            - name: "Gallery"
-              value: "gallery"
-            - name: "Audio"
-              value: "audio"
-            - name: "YouTube"
-              value: "youtube"
-            - name: "Vimeo"
-              value: "vimeo"
-      - name: "homedisplay"
-        field:
-          element: "select"
-          label: "Home Display"
-          help: "decide whether to display embedded element (for post types: audio, youtube, vimeo) or Featured Image on home page"
-          options:
-            - name: "Featured Image"
-              value: "featimg"
-            - name: "Embedded Element"
-              value: "iframe"
-      - name: "vimeo-embed"
-        field:
-          element: "text"
-          label: "Vimeo Embedding Code"
-          help: "Set post type to vimeo in order for this to work"
-      - name: "gallery-id"
-        field:
-          element: "text"
-          label: "Gallery ID"
-          help: "ID of the gallery defined within _data/galleries.yml - use include in content to use"
-      - name: "audio-embed"
-        field:
-          element: "text"
-          label: "Audio Embedding Code"
-          help: "Set post type to audio in order for this to work"
-      - name: "yt-video-id"
-        field:
-          element: "text"
-          label: "YouTube Video ID"
-          help: "Set post type to youtube in order for this to work. Do not set featured image, as the youtube video thumbnail will be used"
-          type: "text"
+repository: mzlogin/mzlogin.github.io
 
+# ---------------- #
+#      Comments    #
+# ---------------- #
+# support provider: disqus, netease_gentie
+comments_provider: netease_gentie
+# !!!重要!!! 请修改下面这些信息为你自己申请的
+# !!!Important!!! Please modify infos below to yours
+disqus_username: mzlogin
+netease_gentie_key: 560ed243b708465d82d5a0a5f3b83da1
+# 在使用网易云跟帖时可点击显示 Disqus
+lazy_load_disqus : true
+
+# ---------------- #
+#    Analytics     #
+# ---------------- #
+google:
+    analytics_id: UA-80669434-1

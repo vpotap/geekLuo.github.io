@@ -1,36 +1,39 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% include head.html %}
-    </head>
-
-    <body>
-        {% include svg.html %}
-        <header class="head">
-            {% include header.html %}
-            {% include nav.html %}
-        </header>
-        {% include search.html %}
-        <section class="margin">
-            <div class="content">
-                <div class="content_container">
-                    <article>
-                        {% if page.featimg %}
-                            <img class="featimg" src="{{ site.media_folder | prepend: site.baseurl | replace: '//', '/'}}/{{ page.featimg }}" alt="{{ page.featimg }}">
-                        {% endif %}
-
-                        <h1 class="page_title">
-                            {{ page.title }}
-                        </h1>
-                        <div class="post_content">
-                            {{ content }}
-                        </div>
-                    </article>
+---
+layout: default
+---
+<section class="collection-head small geopattern" data-pattern-id="{{ page.title | truncate: 15}}">
+    <div class="container">
+        <div class="collection-title">
+            <h1 class="collection-header">{{ page.title }}</h1>
+            {% if page.subtitle %}
+                <div class="collection-info">
+                    <span class="meta-info">
+                        {{ page.subtitle}}
+                    </span>
                 </div>
-                {% include sidebar.html %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- / .banner -->
+ <section class="container content">
+        <div class="columns">
+            <div class="column two-thirds" >
+                <article class="article-content markdown-body">
+                    {{ content }}
+                    {% include article-footer.html %}
+                </article>
+                <div class="share">
+                    {% include sns-share.html %}
+                </div>
+                <div class="comment">
+                    {% include comments.html %}
+                </div>
             </div>
-        </section>
-        {% include footer.html %}
-        <script src="{{ site.baseurl | replace: '//', '/' }}/js/build/global.min.js"></script>
-    </body>
-</html>
+            <div class="column one-third">
+                {% include sidebar-search.html %}
+                {% include sidebar-popular-repo.html %}
+            </div>
+        </div>
+    </section>
+    <!-- /section.content -->
